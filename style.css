@@ -1,0 +1,456 @@
+:root {
+            /* DEFINIÇÃO DAS VARIÁVEIS DE COR */
+            
+            /* Tons de Azul */
+            --azul-claro: #861010;
+            --azul-medio: #690909;
+            --azul-escuro: #4D0000;
+            
+            /* Tons de Vermelho */
+            --roxo-suave: #3e3e7f;
+            --roxo-vibrante: #2e2e54;
+            --roxo-profundo: #1A1A2E;
+            
+            /* Branco/Neutro */
+            --branco-puro: #1b1a1a;
+            --branco-gelo: #000; /* Um branco com leve toque azul */
+    
+        }
+*{
+  margin: 2px 0 0 0 ;
+  padding: 0;
+  box-sizing: border-box;
+}
+.body-index{
+  
+    overflow: hidden;
+    overflow-x: hidden;
+}
+body{
+    color: #E63900;
+            font-family: 'Poppins', sans-serif;
+            
+            /* CONSTRUÇÃO DO MESH GRADIENT */
+            /* Usamos radial-gradient sobrepostos em posições diferentes */
+            background-color: var(--branco-gelo); /* Cor de fundo base */
+            background-image: 
+                radial-gradient(at 10% 10%, var(--azul-claro) 0, transparent 40%),
+                radial-gradient(at 90% 10%, var(--roxo-suave) 0, transparent 40%),
+                radial-gradient(at 50% 50%, var(--branco-puro) 0, transparent 60%), /* Ponto de branco central */
+                radial-gradient(at 10% 90%, var(--roxo-vibrante) 0, transparent 50%),
+                radial-gradient(at 90% 90%, var(--azul-medio) 0, transparent 50%),
+                radial-gradient(at 30% 60%, var(--azul-escuro) 0, transparent 30%), /* Ponto escuro mais sutil */
+                radial-gradient(at 70% 30%, var(--roxo-profundo) 0, transparent 30%); /* Ponto profundo mais sutil */
+            background-attachment: fixed;
+            background-size: 200% 200%; /* Aumenta o tamanho para animação */
+            animation: meshAnimation 20s ease infinite; /* Adiciona movimento */
+        }
+                /* ANIMAÇÃO DO MESH GRADIENT */
+        @keyframes meshAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+
+
+.menu-button {
+  position: relative; 
+  width: 40px;
+  height: 31px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Espaça as linhas igualmente */
+  padding: 0;
+  z-index: 10;
+  margin: 2% 0 0 5%;
+}
+
+.line {
+  width: 100%;
+  height: 4px;
+  background-color: #E63900;
+  border-radius: 4px;
+  transition: all 0.3s ease-in-out; /* Suaviza movimento, cor e opacidade */
+  transform-origin: center; /* Garante que a rotação seja pelo meio */
+  z-index: 5;
+}
+
+/* --- ESTADO ATIVO (QUANDO VIRA "X") --- */
+
+/* A linha do topo desce e gira 45 graus */
+.menu-button.active .line:nth-child(1) {
+  transform: translateY(13px) rotate(45deg);
+}
+
+/* A linha do meio simplesmente desaparece */
+.menu-button.active .line:nth-child(2) {
+  opacity: 0;
+  transform: translateX(-20px); /* Dá um efeito de "saída" lateral */
+}
+
+/* A linha de baixo sobe e gira -45 graus */
+.menu-button.active .line:nth-child(3) {
+  transform: translateY(-13px) rotate(-45deg);
+}
+
+.nav-menu {
+  position: fixed;
+  top: 0;
+  left: -100%; /* Começa escondido fora da tela */
+  width: 250px;
+  height: 100vh;
+  background: #1A1A2E;
+  transition: left 0.4s ease; /* Animação suave de deslize */
+  box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+  padding-top: 80px;
+  z-index: 3;
+  
+}
+
+/* Quando o botão tiver a classe .active, o menu aparece */
+.menu-button.active + .nav-menu {
+  left: 0; /* Desliza para dentro da tela */
+}
+.nav-menu a{
+    text-decoration: none;
+    color: #E63900;
+}
+.list{
+    width: 80%;
+    min-height: 300px;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+}
+.item-img img{
+  width: 100px;
+  border-radius: 50px;
+  transform: translateX(400px);
+    opacity: 0;
+    transition: transform 0.6s ease, opacity 0.6s ease;
+    transition-delay: 0.5s;
+  filter: drop-shadow(0 0 30px rgba(195, 57, 7, 0.9));
+}
+
+.glr-img img{
+  width: 200px;
+  height: 250px;
+  border-radius: 10px;
+  
+  transform: translateX(400px);
+    opacity: 0;
+    transition: transform 0.6s ease, opacity 0.6s ease;
+    transition-delay: 0.5s;
+  filter: drop-shadow(0 0 30px rgba(195, 57, 7, 0.9));
+}
+
+.active1 .glr-img img{
+    transform: translateX(0);
+    opacity: 1;
+}
+.item{
+  position: absolute;
+  min-height: 240px;
+    /* O mesmo valor para todas as direções*/
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+
+
+    width: 100%;
+    padding: 1%;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(20px) brightness(100%);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+    text-align: center;
+    transform: translateX(100vh);
+    flex-direction: column;
+    transition: transform 0.7s ease-in-out, opacity 0.7s ease-in-out; 
+}
+.item:hover{
+    transform: scale(1.025);
+}
+.q-sms{
+    width: 90%;
+    min-height: 20%;
+    padding: 1.5%;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(20px) brightness(100%);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+    text-align: center;
+    margin-top: 5%;
+    margin-left: 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.q-sms h2{
+  margin-top: 2%;
+  font-size: 1.5rem;
+}
+.q-sms p{
+  margin-bottom: 2%;
+  color: #fff;
+  font-size: 1rem;
+  margin: 2% 5% 0 5%;
+}
+.q-sms img{
+  width: 200px;
+  border-radius:500px;
+  filter: drop-shadow(0 0 30px rgba(195, 57, 7, 0.9));
+}
+.contact{
+    width: 90%;
+    min-height: 20%;
+    padding: 1.5%;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(20px) brightness(100%);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+    text-align: center;
+    margin-top: 4%;
+    margin-left: 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.contact h2{
+  margin-top: 2%;
+  font-size: 1.5rem;
+}
+.contact img{
+  width: 150px;
+  height: 150px;
+  filter: drop-shadow(0 0 30px rgba(195, 57, 7, 0.9));
+}
+.active1{
+    opacity: 1;
+    transform: translateX(0);
+}
+.active1 .item-img img{
+    transform: translateX(0);
+    opacity: 1;
+}
+.title-content{
+  font-size: 1.5rem;
+    transform: translateX(200px);
+    transition: transform 0.6s ease, opacity 0.6s ease;
+    transition-delay: 0.5s;
+    color: #ff4406;
+}
+.active1 .title-content{
+    transform: translateX(0);
+    opacity: 1;
+}
+.description{
+
+    font-size: 1rem;
+    text-align: center;
+    transform: translateX(200px);
+    transition: transform 0.6s ease, opacity 0.6s ease;
+    transition-delay: 0.5s;
+    margin-bottom: 2%;
+    max-width: 90%;
+    margin-left: 5%;
+    color: #fff;
+}
+.active1 .description{
+    transform: translateX(0);
+    opacity: 1;
+}
+.top{
+    background-color: rgba(145, 17, 17, 0.4);
+    /* 2c0101*/
+    text-align: center;
+    width: 100%;
+    height: 18vh;
+    margin: 0;
+    margin-bottom: 2%;
+    color: #fff;
+    border-bottom: 2px solid #fff;
+    padding-top: 2%;
+}
+
+.top h1{
+  font-size: 2rem;
+}
+.top h2{
+  font-size: 1rem;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+.arrows{
+    position: absolute;
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 5;
+
+}
+
+.arrows-btn{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    background-color: rgba(186, 23, 23, 0.7);
+    border: 1px solid rgb(148, 1, 1);
+}
+
+.arrows-btn:hover{
+    background-color: rgba(92, 5, 5, 0.819);
+    border-color: #ff0000;
+}
+.btn-alt {
+  position: relative;
+  padding: 12px 24px;
+  background-color: transparent;
+  
+  border: 2px solid #ff0000;
+  cursor: pointer;
+  overflow: hidden; /* Garante que o preenchimento não saia do botão */
+  transition: color 0.4s ease;
+  z-index: 1;
+  border-radius: 20px;
+  transform: translateX(200px);
+    transition: transform 0.6s ease, opacity 0.6s ease;
+    transition-delay: 0.5s;
+}
+.btn-alt a{
+  text-decoration: none;
+  color: #E63900;
+}
+
+.btn-alt::before {
+  content: "";
+  position: absolute;
+  
+  top: 0;
+  left: -100%; /* Começa fora à esquerda */
+  width: 100%;
+  height: 100%;
+  background-color: #861010;
+  transition: left 0.4s ease;
+  z-index: -1; /* Fica atrás do texto */
+}
+
+.btn-alt:hover {
+  color: white;
+}
+
+.btn-alt:hover::before {
+  left: 0; /* Desliza para dentro */
+ 
+}
+.active1 .btn-alt {
+    transform: translateX(0);
+    opacity: 1;
+}
+.container{
+  margin-top: 5%;
+}
+.back-index img{
+  margin-top: 5%;
+  width: 150px;
+  border-radius: 500px;
+  filter: drop-shadow(0 0 30px rgba(195, 57, 7, 0.9));
+}
+.back-index{
+    width: 50%;
+    padding: 1.5%;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(20px) brightness(100%);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+    text-align: center;
+    margin: 10% 0 5% 25%;
+}
+
+
+
+
+@media screen and (min-width: 768px) {
+
+.nav-menu {
+  position: fixed;
+  top: 0;
+  left: -100%; /* Começa escondido fora da tela */
+  width: 400px;
+  height: 100vh;
+  background: #1A1A2E;
+  transition: left 0.4s ease; /* Animação suave de deslize */
+  box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+  padding-top: 80px;
+  z-index: 3;
+  
+}
+
+.top{
+    background-color: rgba(145, 17, 17, 0.4);
+    /* 2c0101*/
+    text-align: center;
+    width: 100%;
+    height: 25vh;
+    margin: 0;
+    margin-bottom: 2%;
+    color: #fff;
+    border-bottom: 2px solid #fff;
+    padding-top: 2%;
+}
+
+
+.arrows{
+    position: absolute;
+    width: 55%;
+    display: flex;
+    justify-content: space-between;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 5;
+
+}
+
+.arrows-btn{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    cursor: pointer;
+    background-color: rgba(186, 23, 23, 0.7);
+    border: 1px solid rgb(148, 1, 1);
+}
+
+.glr-img img{
+  width: 250px;
+  height: 300px;
+  border-radius: 10px;
+  
+  transform: translateX(400px);
+    opacity: 0;
+    transition: transform 0.6s ease, opacity 0.6s ease;
+    transition-delay: 0.5s;
+  filter: drop-shadow(0 0 30px rgba(195, 57, 7, 0.9));
+}
+
+
+
+
+
+}
